@@ -10,6 +10,8 @@ import LeaveRequest from "./components/LeaveRequest";
 import Card from "./utils/Card";
 import Exam from "./components/Exam";
 import Contact from "./components/Contact";
+import SeatingPlan from "./components/SeatingPlan";
+import DutyLog from "./components/DutyLog";
 
 // const appRouter = createBrowserRouter([
 
@@ -32,6 +34,8 @@ root.render(
         <Route path="/leaveReq" element={<LeaveRequest />} />
         <Route path="/examVenue" element={<Exam />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/generateSeatPlan" element={<SeatingPlan/>} />
+        <Route path="/dutyLog" element={<DutyLog/>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
