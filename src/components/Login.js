@@ -1,7 +1,27 @@
 import React, { useState } from "react";
 import loginImg from "../utils/loginImg.jpg";
-
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import md5 from "md5";
+import { useNavigate } from "react-router";
+const CryptoJS = require('crypto-js')
 const Login = () => {
+  const {register,handleSubmit}=useForm()
+  // const navigate=useNavigate()
+  const onSubmit=(data)=>{
+      axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/login`,{params:{
+        UserPassword:CryptoJS.MD5(data.password).toString(),
+        UserID: data.email,
+      }}).then((resp)=>{
+          if(resp.data.UserRole){
+            localStorage.setItem('role',resp.data.UserRole)
+            // navigate('/')
+          }
+      }).catch(function (err){
+
+      })
+  }
+
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
       <div>
@@ -13,8 +33,8 @@ const Login = () => {
         <h1 className="text-3xl font-semibold text-center text-black underline">
           Login
         </h1>
-        <form className="mt-6">
-          <div className="mb-2">
+        <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
+          {/* <div className="mb-2">
             <label
               htmlFor="userRole"
               className="block text-sm font-semibold text-gray-800"
@@ -23,22 +43,23 @@ const Login = () => {
             </label>
             <select
               id="userRole"
+              {...register('role',{ required:true})}
               className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md border-gray-300  focus:outline-none focus:ring focus:ring-opacity-40"
             >
               <option value="admin">Admin</option>
               <option value="student">Student</option>
               <option value="invigilator">Invigilator</option>
             </select>
-          </div>
+          </div> */}
           <div className="mb-2">
             <label
               for="email"
               className="block text-sm font-semibold text-gray-800"
             >
-              Email
+              User Id
             </label>
             <input
-              type="email"
+              {...register('email',{ required:true})}
               className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md border-gray-300  focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
@@ -51,6 +72,7 @@ const Login = () => {
             </label>
             <input
               type="password"
+              {...register('password',{ required:true})}
               className="block w-full px-4 py-2 mt-2 text-black bg-white border rounded-md border-gray-300  focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
