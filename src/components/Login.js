@@ -3,19 +3,25 @@ import loginImg from "../utils/loginImg.jpg";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import md5 from "md5";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+
 const CryptoJS = require('crypto-js')
 const Login = () => {
   const {register,handleSubmit}=useForm()
-  // const navigate=useNavigate()
+  const navigate=useNavigate()
   const onSubmit=(data)=>{
       axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/login`,{params:{
         UserPassword:CryptoJS.MD5(data.password).toString(),
         UserID: data.email,
       }}).then((resp)=>{
-          if(resp.data.UserRole){
+          if(resp.data.UserRole==='Invigilator'){
             localStorage.setItem('role',resp.data.UserRole)
-            // navigate('/')
+            navigate('/examVenue')
+            
+            alert(`logged in as ${resp.data.UserRole}`)
+          }
+          else if(resp.data.UserRole==='Student'){
+            navigate('/home')
           }
       }).catch(function (err){
 

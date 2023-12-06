@@ -6,7 +6,7 @@ import axios from "axios";
 export default function Exam() {
   const [invi, setInvi] = useState([]);
   const fetchReqs=()=>{
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/invigilator/examcard`,{params:{UserID:'21mcs001'}}).then((resp)=>{
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/${localStorage.getItem('role')}/examcard`,{params:{UserID:'21mcs001'}}).then((resp)=>{
       setInvi(resp.data.exams)
    }).catch(function (err){
 
@@ -28,11 +28,16 @@ export default function Exam() {
   return (
     <div>
       <Navbar />
-      {invi?.map((exam)=>{
+      {/* {invi?.map((exam)=>{
         return(
-          <Card  id={exam.ExamID} exam={exam} handleLeave={handleLeave} fetchReqs={fetchReqs} />
-        )
-      })}
+          )
+        })} */}
+        <div className="flex ">
+
+        <Card   />
+        <Card   />
+        <Card   />
+        </div>
     </div>
   );
 }

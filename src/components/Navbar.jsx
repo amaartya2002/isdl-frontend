@@ -128,7 +128,7 @@ function Navbar() {
             </li>
             <li>
               <NavLink
-                to="/logout"
+                to="/login"
                 className={({ isActive }) =>
                   isActive
                     ? "block py-2 pl-3 pr-4  bg-blue-700 rounded md:bg-transparent md:text-blue-700 text-white md:p-0 dark:text-white md:dark:text-blue-500"
